@@ -1,15 +1,18 @@
 #!/bin/bash
 
+# CONFIGURATION
 KEYFILE=/root/.luks-backup-key-2017-12
 MOUNTPOINT=/mnt/backup
 VGS="skbak1 skbak2"
 MAPPING_NAME="bak-home"
 
+# INTERNAL VARIABLES
+SCRIPT=$(readlink -f $0)
 PIDFILE=/var/run/mkbackup.sh
 lvs=()
 
 function usage {
-    echo "usage: $0 [mount|umount]"
+    echo "usage: $SCRIPT [mount|umount]"
 }
 
 function run_vgscan {
@@ -24,9 +27,6 @@ function run_vgscan {
 
 if [ "$1" == "mount" ]; then
     run_vgscan
-    # First unmount, just to be sure...
-    umount $MOUNTPOINT &> /dev/null
-
     for vg in "${vgs_exists[@]}"; do
         # vgchange will touch all of them - we only need one
         # vgchange -a y $vg &> /dev/null
@@ -50,6 +50,11 @@ elif [ "$1" == "umount" ]; then
     done
 elif [ "$1" == "" ]; then
     usage
+    exit 2
 else
-    echo "$0: Unknown operation '$1'"
+    usage
+    echo "$SCRIPT: Unknown operation '$1'"
+    exit 1
 fi
+
+exit 0
