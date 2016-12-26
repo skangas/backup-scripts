@@ -1,3 +1,25 @@
-Scripts I use for making backups using rsnapshot.
+Scripts I use for making backups with rsnapshot.
 
-Copyright (C) 2016 Stefan Kangas
+# Find info
+vgscan
+vgdisplay
+
+# Enable lv group
+lvchange -a y skbak1
+
+# Open using password
+cryptsetup open --type luks /dev/skbak1/home bak-home
+
+# Open using key file
+cryptsetup open --type luks --key-file /home/skangas/huey-backup.luks /dev/skbak1/home bak-home
+
+# Create a key file
+dd bs=512 count=4 if=/dev/urandom of=/root/.luks-backup-key
+
+# Add it to logical volume
+cryptsetup luksAddKey /dev/mapper/skbak1-home /root/.luks-backup-key
+
+For more information:
+https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption
+
+Copyright (C) 2016 Stefan Kangas.
