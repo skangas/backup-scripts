@@ -1,0 +1,14 @@
+# TODO:
+# mkdir -p /root/.backupinfo
+# # now let's add a last date
+# touch /root/.backupinfo/$vg-last
+
+# # FIXME: Check when the vg in question was last updated, and email a reminder if it has
+# # been more than x days
+# for vg in $VGS; do
+#     last_touched=/root/.backupinfo/$vg-last
+#     if test `find $fil`; then # -mdays +90`; then
+#         # Time for a reminder if it's been more than 1 days since we last emailed
+#         echo "Dags att rotera backupdiskar ($vg ska hem)"|mail -s "Rotera backupdiskarna" stefankangas@gmail.com
+#     fi
+# done
