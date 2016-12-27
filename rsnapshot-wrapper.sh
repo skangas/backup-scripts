@@ -21,6 +21,7 @@ BACKUP_DIRECTORY=/mnt/backup
 # INTERNAL VARIABLES
 SCRIPT=$(readlink -f $0)
 SCRIPTPATH=`dirname $SCRIPT`
+EXIT=0
 
 # Mount
 $SCRIPTPATH/mount-backup.sh mount #&> /dev/null
@@ -28,9 +29,11 @@ $SCRIPTPATH/mount-backup.sh mount #&> /dev/null
 
 # Run rsnapshot
 nice -n 19 ionice -c 3 rsnapshot "$@"
+EXIT=$?
 
 # Unmount
 $SCRIPTPATH/mount-backup.sh umount
 [ $? -eq 0 ] || exit 1
 
-exit 0
+exit $EXIT
+
