@@ -42,6 +42,10 @@ function run_vgscan {
 
 if [ "$1" == "mount" ]; then
     run_vgscan
+    if [ "${#vgs_exists[@]}" == 0 ]; then
+        echo "No volume groups found  (tried: $VGS)"
+        exit 1
+    fi
     for vg in "${vgs_exists[@]}"; do
         # vgchange will touch all of them - we only need one
         # vgchange -a y $vg &> /dev/null
