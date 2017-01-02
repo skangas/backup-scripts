@@ -18,6 +18,11 @@
 # CONFIGURATION
 BACKUP_DIRECTORY=/mnt/backup
 
+# PATHS
+NICE="/usr/bin/nice"
+IONICE="/usr/bin/ionice"
+RSNAPSHOT="/usr/bin/rsnapshot"
+
 # INTERNAL VARIABLES
 SCRIPT=$(readlink -f $0)
 SCRIPTPATH=`dirname $SCRIPT`
@@ -28,7 +33,7 @@ $SCRIPTPATH/mount-backup.sh mount #&> /dev/null
 [ $? -eq 0 ] || exit 1
 
 # Run rsnapshot
-nice -n 19 ionice -c 3 rsnapshot "$@"
+$NICE -n 19 $IONICE -c 3 $RSNAPSHOT "$@"
 EXIT=$?
 
 # Unmount
