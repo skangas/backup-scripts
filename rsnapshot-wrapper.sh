@@ -17,11 +17,13 @@
 
 # CONFIGURATION
 BACKUP_DIRECTORY=/mnt/backup
+RSNAPSHOT_VERBOSE=""
 
 # PATHS
 NICE="/usr/bin/nice"
 IONICE="/usr/bin/ionice"
 RSNAPSHOT="/usr/bin/rsnapshot"
+RSNAPSHOT_CMD="$NICE -n 19 $IONICE -c 3 $RSNAPSHOT"
 
 # INTERNAL VARIABLES
 SCRIPT=$(readlink -f $0)
@@ -32,8 +34,19 @@ EXIT=0
 $SCRIPTPATH/mount-backup.sh mount #&> /dev/null
 [ $? -eq 0 ] || exit 1
 
+full=$(df -h | grep $BACKUP_DIRECTORY)
+full_percent=$(echo $full | awk '{ print $5 }' | sed 's/%//g')
+if ((full_percent == 100))
+then
+    echo "WARNING: Backup destination $BACKUP_DIRECTORY is FULL:"
+    echo $full
+    $RSNAPSHOT_CMD du
+    echo "Proceeding with backup, full output:"
+    RSNAPSHOT_VERBOSE="-v"
+fi
+
 # Run rsnapshot
-$NICE -n 19 $IONICE -c 3 $RSNAPSHOT "$@"
+$RSNAPSHOT_CMD $RSNAPSHOT_VERBOSE "$@"
 EXIT=$?
 
 # Unmount
