@@ -1,5 +1,8 @@
 Scripts I use for making backups with rsnapshot.
 
+# Install in /usr/local/sbin:
+make install
+
 # Find info
 vgscan
 vgdisplay
