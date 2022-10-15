@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# lock -- see flock(1) for more details
+[ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en "$0" "$0" "$@" || :
+
 # CONFIGURATION
 BACKUP_DIRECTORY=/mnt/backup
 RSNAPSHOT_VERBOSE=""
