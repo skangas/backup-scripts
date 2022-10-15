@@ -1,4 +1,4 @@
-# Copyright (C) 2016 Stefan Kangas.
+# Copyright (C) 2016-2022 Stefan Kangas.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ all:
 	@echo "Run \"make install\" to install in ${SBINDIR}"
 
 install:
-	install -m 755 mount-backup.sh ${SBINDIR}/mount-backup.sh
-	install -m 755 rsnapshot-wrapper.sh ${SBINDIR}/rsnapshot-wrapper.sh
+	$(INSTALL) -m 755 mount-backup.sh ${SBINDIR}/mount-backup.sh
+	$(INSTALL) -m 755 rsnapshot-wrapper.sh ${SBINDIR}/rsnapshot-wrapper.sh
 
 uninstall:
 	rm ${SBINDIR}/mount-backup.sh
