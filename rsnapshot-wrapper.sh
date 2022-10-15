@@ -23,10 +23,11 @@ BACKUP_DIRECTORY=/mnt/backup
 RSNAPSHOT_VERBOSE=""
 
 # PATHS
-NICE="/usr/bin/nice"
-IONICE="/usr/bin/ionice"
+NICE="/usr/bin/nice -n 19"
+IONICE="/usr/bin/ionice -c 3"
 RSNAPSHOT="/usr/bin/rsnapshot"
-RSNAPSHOT_CMD="$NICE -n 19 $IONICE -c 3 $RSNAPSHOT"
+NOCACHE="/usr/bin/nocache"
+RSNAPSHOT_CMD="$NOCACHE $NICE $IONICE $RSNAPSHOT"
 
 # INTERNAL VARIABLES
 SCRIPT=$(readlink -f $0)
