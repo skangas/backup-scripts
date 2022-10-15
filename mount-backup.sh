@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2016 Stefan Kangas.
+# Copyright (C) 2016-2022 Stefan Kangas <stefankangas@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
